@@ -1,0 +1,716 @@
+/* -------------------- common -------------------- */
+*{cursor: none;}
+body{background: url(../img/noise_bg.png);}
+.cursor{
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: fixed;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width .2s, height .2s;
+    z-index: 1000;
+}
+html.cursorSizeChanger .cursor{width: 50px; height: 50px;}
+.cursorPoint{}
+
+
+
+/* -------------------- wrap -------------------- */
+#wrap{}
+
+
+
+/* -------------------- header -------------------- */
+#header{
+    position: fixed;
+    width: 100%; height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    box-sizing: border-box;
+    transition: width 1s;
+    z-index: 50;
+}
+#header.active{width: 50%;}
+#header.active>.menu{border-right: none;}
+#header.active>.menu>a>i{transform: scale(150%);}
+.logo{
+    border-left: 1px solid #fff;
+    padding: 15px;
+}
+.logo a{
+    display: block;
+    height: 20px;
+}
+.logo a img{height: 100%;}
+.menu{
+    padding: 15px;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+    box-sizing: border-box;
+}
+.menu:hover>a>i{transform: rotate(-45deg);}
+#header.active>.menu:hover>a>i{transform: rotate(45deg) scale(150%);}
+.menu a{
+    display: block;
+    height: 20px;
+}
+.menu a i{
+    font-size: 20px;
+    color: #fff;
+    transition: transform 1s;
+}
+
+
+
+/* -------------------- menu -------------------- */
+.menuWrap{
+    position: fixed;
+    top: 0; right: 0;
+    width: 50%; height: 100%;
+    z-index: 100;
+    background: url(../img/noise_bg1.png);
+    transition: all 1s;
+    transform: translateX(100%);
+}
+.menuWrap.active{transform: translateX(0%);}
+.menuInner{
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.menuInner>li{
+    position: relative;
+    width: 100%; height: 100%;
+    box-sizing: border-box;
+}
+.menuInner>li::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%; height: 0;
+    background-color: #ed283c;
+    transition: all .2s;
+}
+.menuInner>li>a{
+    position: absolute;
+    top: 50%; left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    font: bold 5vw "PyeongChangPeace";
+    color: #fff;
+    box-sizing: border-box;
+    transition: color .2s;
+}
+.menuInner>li>a::after{
+    content: "";
+    position: absolute;
+    top: 50%; right: 0;
+    transform: translateY(-50%);
+    display: block;
+    width: 2vw; height: 2vw;
+    border-radius: 2vw;
+    background-color: #ed283c;
+    transition: all .5s;
+}
+.menuInner>li:last-child>a::after{display: none;}
+.menuInner>li.active>a::after{background-color: #f7f008;}
+.menuInner>li:hover::before{
+    content: '';
+    height: 100%;
+}
+.menuInner>li:hover>a::after{
+    content: '';
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+.menuDim{
+    position: fixed;
+    width: 100%; height: 100%;
+    background-color: #000;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 1s;
+}
+.menuDim.active{
+    opacity: .7;
+    z-index: 99;
+    pointer-events: auto;
+}
+
+
+
+/* -------------------- modal -------------------- */
+.modalWrap{}
+.modalList{}
+.modalList>li{display: none;}
+.modalList>li>div{
+    position: fixed;
+    z-index: 900;
+    width: 50%; height: 80%;
+    bottom: 50%; left: 50%;
+    transform: translate(-50%, 50%);
+    overflow-x: hidden;
+    background: url(../img/noise_bg1.png);
+    border: 1px solid #fff;
+    padding: 10px;
+}
+.modalList>li>div>span{
+    display: inline-block;
+    color: #fff;
+    white-space: nowrap;
+    padding: 0 0 10px 10px;
+    font: 16px 'Pretendard';
+    line-height: 50px;
+}
+.modalList>li>div>span:first-child::after{
+    content: "|";
+    margin-left: 10px;
+}
+.modalList>li>div>span>a{
+    display: block;
+    color: #fff;
+    animation: figmalink-animation ease 3s infinite;
+}
+.modalList>li>div>span>a:hover{color: #f7f008;}
+@keyframes figmalink-animation {
+    0% {transform: translateY(0px);}
+    50%{transform: translateY(0px);}
+    75%{transform: translateY(-5px);}
+    100% {transform: translateY(0);}
+}
+.modalClose{
+    position: absolute;
+    font-size: 50px;
+    color: #fff;
+    right: 10px; top: 10px;
+}
+.modalList>li>div>img{
+    width: 100%;
+    display: block;
+    overflow: hidden;
+}
+.modalList>li.active{display: block;}
+.modalDim{
+    position: fixed;
+    width: 100%; height: 100%;
+    background-color: #000;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 1s;
+}
+.modalDim.active{
+    opacity: .7;
+    z-index: 899;
+    pointer-events: auto;
+}
+
+
+
+/* -------------------- section 1 -------------------- */
+#sec1{
+    width: 100%; height: 100vh;
+    position: relative;
+}
+.sec1_inner{
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font: bold 10vw "PyeongChangPeace";
+    color: #fff;
+    line-height: 10vw;
+}
+.sec1_inner>ul{
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.sec1_inner>ul>li{
+    transition: color .3s , font-size .3s;
+    animation: parallax-animation 3s 1 ease;
+    animation-fill-mode: forwards;
+    visibility: hidden;
+    opacity: 0.1;
+}
+.sec1_inner>ul>li:hover{
+    color: #ed283c;
+    font-size: 11vw;
+}
+.row1_wrap{}
+.row2_wrap{}
+.row3_wrap{}
+.control_character{}
+@keyframes parallax-animation {
+    0% {
+        transform: translateY(15vh);
+        visibility: visible;
+        opacity: 0
+    }
+    100% {
+        transform: translateY(0);
+        visibility: visible;
+        opacity: 1
+    }
+}
+
+
+
+/* -------------------- section 2 -------------------- */
+#sec2{
+    width: 100%; height: 100vh;
+    position: relative;
+}
+.dividerLineWrap{
+    display: block;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+}
+.dividerLine{
+    border: 3px solid #fff;
+    margin-bottom: 10px;
+    opacity: 0;
+    transition: opacity 1.5s;
+}
+.dividerLine:nth-child(1){border: 2vw solid #fff;}
+.dividerLine:nth-child(2){border: 1.5vw solid #fff;}
+.dividerLine:nth-child(3){border: 1vw solid #fff;}
+.dividerLine:nth-child(4){border: .5vw solid #fff;}
+.dividerLine.active:nth-child(1){opacity: .4;}
+.dividerLine.active:nth-child(2){opacity: .3;}
+.dividerLine.active:nth-child(3){opacity: .2;}
+.dividerLine.active:nth-child(4){opacity: .1;}
+.pofolTitle{
+    position: absolute;
+    bottom: 20px; left: 20px;
+}
+.pofolTitle h2{
+    font: bold 5vw "PyeongChangPeace";
+    letter-spacing: 1vw;
+    color: #fff;
+}
+.description{
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.description div{}
+.description div p{
+    font: 2vw 'Pretendard';
+    color: #fff;
+    text-align: center;
+    text-wrap: nowrap;
+    letter-spacing: .3vw;
+    z-index: 50;
+    position: relative;
+    transform: translateY(100vh);
+    transition: all 1s;
+    opacity: 0;
+}
+.description div:nth-child(2) p{margin-bottom: 1vw;}
+.ptb.active>p{
+    transform: translateY(0px);
+    opacity: 1;
+}
+.bg_anime{width: 100%; height: 100vh;}
+.circles {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    overflow: hidden;
+}
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px; height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: bg-anime 25s linear infinite;
+    bottom: -150px;
+    border-radius: 100px;
+}
+.circles li:nth-child(1) {
+    left: 25%;
+    width: 80px; height: 80px;
+    animation-delay: 0s;
+}
+.circles li:nth-child(2) {
+    left: 10%;
+    width: 20px; height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+.circles li:nth-child(3) {
+    left: 70%;
+    width: 20px; height: 20px;
+    animation-delay: 4s;
+}
+.circles li:nth-child(4) {
+    left: 40%;
+    width: 60px; height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+.circles li:nth-child(5) {
+    left: 65%;
+    width: 20px; height: 20px;
+    animation-delay: 0s;
+}
+.circles li:nth-child(6) {
+    left: 75%;
+    width: 110px; height: 110px;
+    animation-delay: 3s;
+}
+.circles li:nth-child(7) {
+    left: 35%;
+    width: 150px; height: 150px;
+    animation-delay: 7s;
+}
+.circles li:nth-child(8) {
+    left: 50%;
+    width: 25px; height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+.circles li:nth-child(9) {
+    left: 20%;
+    width: 15px; height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+.circles li:nth-child(10) {
+    left: 85%;
+    width: 150px; height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+@keyframes bg-anime {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-62.5rem);
+        opacity: 0;
+    }
+}
+
+
+
+/* -------------------- section 3 -------------------- */
+#sec3{
+    width: 100%;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    box-sizing: border-box;
+}
+#lush{margin-top: 10px;}
+#honda{}
+#openbase{}
+.content{
+    width: 100%; height: 500px;
+    position: relative;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.content a{
+    display: block;
+    width: 100%; height: 100%;
+}
+.img_wrap{
+    width: 100%; height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+}
+.bg_wrap{
+    width: 100%; height: 100%;
+    overflow: hidden;
+}
+.bg{
+    width: 100%; height: 100%;
+    display: block;
+    filter: brightness(80%);
+}
+.lushbg{
+    background: url(../img/sec3/lushmockup.jpg) no-repeat center;
+    background-attachment: fixed;
+    background-size: 200%;
+}
+.hondabg{
+    background: url(../img/sec3/hondamockup.jpg) no-repeat center;
+    background-attachment: fixed;
+    background-size: 200%;
+}
+.openbasebg{
+    background: url(../img/sec3/openbasemockup.jpg) no-repeat center;
+    background-attachment: fixed;
+    background-size: 200%;
+}
+.slide_title{
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 49;
+    transition: font-size .5s;
+}
+.slide_track{
+    position: absolute;
+    top: 5%; left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+.slide{
+    border: 1px solid #fff;
+    border-radius: 50px;
+    padding: 10px 20px;
+    margin-right: 1vw;
+    font-size: 16px;
+}
+.slide:last-child{margin-right: 0;}
+.lush_slider .slide_title{
+    font: bold 10vw 'Handwritten';
+    color: #000;
+}
+.honda_slider .slide_title{
+    font: bold 10vw 'RacingSansOne';
+    color: #ed283c;
+}
+.openbase_slider .slide_title{
+    font: bold 10vw 'Pretendard';
+    color: #f8521f;
+}
+.lush_slider .slide{
+    font: medium 16px 'Pretendard';
+    color: #fff;
+}
+.honda_slider .slide{
+    font: medium 16px 'Pretendard';
+    color: #fff;
+}
+.openbase_slider .slide{
+    font: medium 16px 'Pretendard';
+    color: #fff;
+}
+.dim{
+    position: relative;
+    width: 100vw; height: 500px;
+    border-radius: 500px;
+    transform: translateX(100%);
+    background: rgba(255,255,255,0.4);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: all .5s;
+}
+.content:hover .dim{transform: translateX(0%); border-radius: 0;}
+.content:hover .slide_title{font-size: 11vw;}
+
+
+
+/* -------------------- section 4 -------------------- */
+#sec4{}
+.sec4_title{
+    font: bold 2vw "PyeongChangPeace";
+    text-align: center;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    padding: 5px 10px;
+    margin: 10vw 10vw 0;
+}
+.sec4_inner{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.tiltedCard{
+    padding: 10vw;
+    padding: auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+.tiltedCard:nth-child(2){padding: 0 10vw;}
+.tilted_wrap{
+    display: block;
+    width: 50%; height: auto;
+    aspect-ratio: 1;
+    transform: translateX(100vw);
+    opacity: 0;
+    transition: transform .5s, opacity 1s;
+}
+.tilted_wrap>.tilted_img{
+    width: 100%; height: 100%;
+    border-radius: 2vw;
+    transition: all .1s;
+}
+.tiltedCard:nth-child(1) .tilted_img{background: url(../img/sec4/dgb_thumb.png) no-repeat center/cover;}
+.tiltedCard:nth-child(2) .tilted_img{background: url(../img/sec4/andar_thumb.png) no-repeat center/cover;}
+.tiltedCard:nth-child(3) .tilted_img{background: url(../img/sec4/naver_thumb.png) no-repeat center/cover;}
+.tilted_descript{
+    width: 50%; height: auto;
+    position: relative;
+}
+.descript_inner{}
+.textbox{text-align: right;}
+.textbox>h3{
+    font: bold 2vw 'Pretendard';
+    color: #fff;
+    margin-bottom: 10px;
+}
+.textbox>p{
+    font: medium 1vw 'Pretendard';
+    color: #fff;
+}
+.landing_mockup{
+    position: absolute;
+    right: 0; bottom: 0;
+    width: 30vw; height: 30vw;
+    opacity: 0;
+    transform: translateY(100vw);
+    transition: transform 1s, opacity 1s;
+}
+.tiltedCard:nth-child(1) .landing_mockup{background: url(../img/sec4/dgb_mockup.png) no-repeat center/cover;}
+.tiltedCard:nth-child(2) .landing_mockup{background: url(../img/sec4/andar_mockup.png) no-repeat center/cover;}
+.tiltedCard:nth-child(3) .landing_mockup{background: url(../img/sec4/naver_mockup.png) no-repeat center/cover;}
+.ptb.active .tilted_wrap{
+    transform: translateX(0);
+    opacity: 1;
+}
+.ptb.active .landing_mockup{
+    transform: translateY(0);
+    opacity: 1;
+}
+.ptb.active .landing_mockup:hover{transform: scale(1.2);}
+
+
+
+/* -------------------- section 5 -------------------- */
+#sec5{position: relative;}
+.sec5_title{
+    font: bold 2vw "PyeongChangPeace";
+    text-align: center;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    padding: 5px 10px;
+    margin: 0 10vw;
+}
+.sec5_inner{padding: 10vw;}
+.image_grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+}
+.image_grid>li{
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    aspect-ratio: 1;
+    overflow: hidden;
+}
+.image_grid>li>a{
+    display: block;
+    width: 100%; height: 100%;
+}
+/* border radius */
+.image_grid>li:nth-child(1){border-radius: 2vw 0 0 0;}
+.image_grid>li:nth-child(4){border-radius: 0 2vw 0 0;}
+.image_grid>li:nth-child(5){border-radius: 0 0 0 2vw;}
+.image_grid>li:nth-child(8){border-radius: 0 0 2vw 0;}
+/* thumb img location */
+.image_grid>li:nth-child(1)>a{background: url(../img/sec5/design1_thumb.jpg) no-repeat center/cover;}
+.image_grid>li:nth-child(2)>a{background: url(../img/sec5/design2_thumb.jpg) no-repeat center/cover;}
+.image_grid>li:nth-child(3)>a{background: url(../img/sec5/design3_thumb.jpg) no-repeat center/cover;}
+.image_grid>li:nth-child(4)>a{background: url(../img/sec5/design4_thumb.jpg) no-repeat center/cover;}
+.image_grid>li:nth-child(5)>a{background: url(../img/sec5/design5_thumb.jpg) no-repeat center/cover;}
+.image_grid>li:nth-child(6)>a{background: url(../img/sec5/design6_thumb.png) no-repeat center/cover;}
+.image_grid>li:nth-child(7)>a{background: url(../img/sec5/design7_thumb.png) no-repeat center/cover;}
+.image_grid>li:nth-child(8)>a{background: url(../img/sec5/design8_thumb.jpg) no-repeat center/cover;}
+/* hover dim */
+.image_grid>li>a::after{
+    content: '';
+    display: block;
+    width: 100%; height: 100%;
+    background: rgba( 255, 255, 255, 0.1 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 8px );
+    -webkit-backdrop-filter: blur( 8px );
+    border-radius: 2vw;
+    opacity: 0;
+    transition: opacity .5s;
+}
+.image_grid>li>a:hover::after{opacity: 1;}
+
+
+
+/* -------------------- footer -------------------- */
+#footer{
+    width: 100%;
+    z-index: 100;
+}
+.upperBlock{
+    display: flex;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    height: 150px;
+}
+.leftBlock{
+    width: 50%;
+    overflow: hidden;
+}
+.leftBlock a{
+    display: block;
+    font: bold 50px/150px "Pretendard";
+    text-align: center;
+    color: #fff;
+    animation: animateWords 6s infinite ease-in-out alternate;
+}
+@keyframes animateWords {
+    0% {transform: translateY(0%);}
+    25% {transform: translateY(-100%);}
+    50% {transform: translateY(-200%);}
+    75% {transform: translateY(-300%);}
+    100% {transform: translateY(-400%);}
+}
+.rightBlock{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+.rightBlock a{
+    width: 100%;
+    border-left: 1px solid #fff;
+    box-sizing: border-box;
+    text-align: center;
+    color: #fff;
+    transition: all .3s;
+    font-size: 50px;
+    line-height: 150px;
+}
+.rightBlock a:hover{
+    color: #000;
+    background-color: #fff;
+}
+address{
+    width: 100%; 
+    font: 16px "Pretendard";
+    color: #fff;
+    padding: 20px;
+    border: 1px solid #fff;
+    border-top: none;
+    box-sizing: border-box;
+}

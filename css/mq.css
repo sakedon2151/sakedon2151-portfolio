@@ -1,0 +1,81 @@
+/* tablet1 screen */
+@media screen and (max-width: 1279px) {
+    /* section 1 */
+    /* section 2 */
+    /* section 3 */
+    /* section 4 */
+    /* section 5 */
+    /* footer */
+}
+/* tablet2 screen */
+@media screen and (max-width: 1023px) {
+    /* common */
+    *{cursor: auto;}
+    .cursor{display: none;}
+    /* section 2 */
+    .description div p{font-size: 3vw;}
+    /* section 3 */
+    /* section 4 */
+    .tilted_wrap{width: 100%;}
+    .tilted_descript{display: none;}
+    /* section 5 */
+    .image_grid{
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+    .image_grid>li:nth-child(4){border-radius: 0 0 0 0;}
+    .image_grid>li:nth-child(5){border-radius: 0 0 0 0;}
+    .image_grid>li:nth-child(1){border-radius: 2vw 0 0 0;}
+    .image_grid>li:nth-child(2){border-radius: 0 2vw 0 0;}
+    .image_grid>li:nth-child(7){border-radius: 0 0 0 2vw;}
+    .image_grid>li:nth-child(8){border-radius: 0 0 2vw 0;}
+    /* footer */
+    .upperBlock{height: 100px;}
+    .leftBlock{display: none;}
+    .rightBlock{width: 100%;}
+    .rightBlock>a{
+        font-size: 30px;
+        line-height: 100px;
+    }
+    .rightBlock a:first-child{border-left: none;}
+    address{text-align: center;}
+}   
+/* mobile screen */
+@media screen and (max-width: 767px) {
+    /* section 1 */
+    /* section 2 */
+    /* section 3 */
+    .slide{
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    .content{
+        height: auto;
+        aspect-ratio: 1;
+    }
+    .dim{
+        height: auto;
+        aspect-ratio: 1;
+    }
+    /* section 4 */
+    /* section 5 */
+    .modalList>li>div{
+        width: 70%;
+        padding: 5px;
+    }
+    .modalList>li>div>span{
+        font-size: 12px;
+        line-height: 30px;
+        padding: 0 0 5px 5px;
+    }
+    .modalList>li>div>span:first-child::after{margin-left: 5px;}
+    .modalClose{
+        font-size: 30px;
+        right: 5px; top: 5px;
+    }
+    /* footer */
+    address{
+        font-size: 8px;
+        padding: 10px;
+    }
+}
